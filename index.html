@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Чья кисть?</title>
+<meta name="description" content="Спокойная игра на узнавание художника">
+<meta name="theme-color" content="#1C1916">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Чья кисть?">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="root">
+  <p id="installHint" hidden>Чтобы играть как в приложении: «Поделиться» <span aria-hidden="true">⎙</span> → «На экран Домой»</p>
+
+  <div id="offlineNotice">
+    <p id="offlineStatus" role="status" aria-live="polite">Загружаем игру для работы без интернета…</p>
+    <button id="retryOffline" type="button" hidden>Повторить загрузку</button>
+  </div>
+
+  <div id="paintingBox">
+    <img id="painting" alt="Картина">
+    <div id="imageError" role="alert" hidden>
+      <p>Не удалось загрузить картину. Проверьте интернет и попробуйте ещё раз.</p>
+      <button id="retryPainting" type="button">Загрузить картину</button>
+    </div>
+  </div>
+
+  <!-- Question: two big answers, nothing else to press. -->
+  <section id="questionPanel">
+    <p class="question">Чья это кисть?</p>
+    <button id="answerA" class="big" type="button"></button>
+    <button id="answerB" class="big" type="button"></button>
+  </section>
+
+  <!-- Reveal: same calm tone whatever was chosen, one button to go on. -->
+  <section id="answerPanel" hidden>
+    <p id="headline"></p>
+    <p id="caption"></p>
+    <div id="otherRow" hidden>
+      <div class="thumb"><img id="otherPainting" alt=""></div>
+      <div class="otherText">
+        <p id="otherHeadline"></p>
+        <p id="otherCaption"></p>
+      </div>
+    </div>
+    <button id="next" class="big" type="button">Дальше</button>
+  </section>
+</main>
+<script src="collection.js"></script>
+<script src="game.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

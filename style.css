@@ -1,0 +1,178 @@
+/* Warm dark "museum wall" so paintings stand out; text and buttons are high-contrast. */
+:root {
+  --wall: #1C1916;
+  --text-main: #FFF8EC;
+  --text-soft: #E6DCC8;
+  --gold: #F2C76B;
+  --button: #F4EAD3;
+  --button-pressed: #D9C9A6;
+  --button-text: #1C1916;
+  --frame: #3A332B;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--wall);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+#root {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
+           max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+}
+
+#installHint {
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--text-soft);
+  text-align: center;
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+#paintingBox {
+  flex: 1 1 auto;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#painting {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 350ms ease-in-out;
+  pointer-events: none;
+}
+#painting.shown { opacity: 1; }
+
+section { flex: 0 0 auto; margin-top: 20px; }
+[hidden] { display: none !important; }
+
+.question {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.big {
+  display: block;
+  width: 100%;
+  height: 96px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 24px;
+  background: var(--button);
+  color: var(--button-text);
+  font: inherit;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.big:active { background: var(--button-pressed); }
+.big + .big { margin-top: 16px; }
+
+#answerPanel { opacity: 0; transition: opacity 350ms ease-in-out; }
+#answerPanel.shown { opacity: 1; }
+
+#headline {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--gold);
+  text-align: center;
+}
+
+#caption {
+  margin-top: 6px;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+#otherRow {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.thumb {
+  flex: 0 0 120px;
+  width: 120px;
+  height: 120px;
+  padding: 4px;
+  border-radius: 8px;
+  background: var(--frame);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.thumb img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+
+.otherText { flex: 1 1 auto; min-width: 0; margin-left: 16px; }
+
+#otherHeadline { font-size: 22px; font-weight: 700; line-height: 1.2; }
+#otherCaption { margin-top: 4px; font-size: 19px; line-height: 1.25; color: var(--text-soft); }
+
+#next { margin-top: 20px; }
+
+/* Small phones (iPhone SE 1st gen and the like): slightly tighter so the painting keeps room. */
+@media (max-height: 600px) {
+  #headline { font-size: 26px; }
+  #caption { font-size: 19px; }
+  .thumb { flex-basis: 96px; width: 96px; height: 96px; }
+  #otherHeadline { font-size: 19px; }
+  #otherCaption { font-size: 16px; }
+  .big { height: 84px; }
+}
+
+#installHint, #offlineNotice { flex: 0 0 auto; }
+#offlineNotice { text-align: center; margin-bottom: 10px; color: var(--text-soft); }
+#offlineStatus { font-size: 13px; line-height: 1.3; }
+#retryOffline, #retryPainting {
+  font: inherit; color: var(--button-text); background: var(--button);
+  border: 0; border-radius: 10px; padding: 12px 16px; margin-top: 8px;
+  min-height: 44px; cursor: pointer;
+}
+#imageError { max-width: 320px; font-size: 18px; line-height: 1.4; text-align: center; }
+.big:disabled { opacity: .65; cursor: wait; }
+button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+@media (max-height: 700px) {
+  #root { padding-top: max(12px, env(safe-area-inset-top)); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  #installHint { font-size: 12px; margin-bottom: 6px; }
+  #offlineNotice { margin-bottom: 6px; }
+  #offlineStatus { font-size: 12px; }
+  section { margin-top: 12px; }
+  .question { font-size: 25px; margin-bottom: 10px; }
+  .big + .big { margin-top: 10px; }
+  #otherRow { margin-top: 10px; }
+  #next { margin-top: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #painting, #answerPanel { transition: none; }
+}
